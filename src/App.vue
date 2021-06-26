@@ -7,16 +7,6 @@
   <router-view />
 </template>
 
-<script>
-import store from "@/services/store.js";
-
-export default {
-  created() {
-    store.fillTechnologies();
-  },
-};
-</script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

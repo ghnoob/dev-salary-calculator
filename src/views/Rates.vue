@@ -26,18 +26,20 @@
 </template>
 
 <script>
-import store from "@/services/store.js";
 import CalculatorServices from "@/services/CalculatorServices.js";
 
 export default {
   data() {
     return {
-      technologies: store.technologies,
+      technologies: [],
       rates: [],
     };
   },
 
   mounted() {
+    CalculatorServices.getTechnologies()
+      .then((response) => (this.technologies = response.data))
+      .catch((error) => console.error(error));
     CalculatorServices.getRates()
       .then((response) => (this.rates = response.data))
       .catch((error) => console.error(error));
