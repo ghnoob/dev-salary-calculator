@@ -2,10 +2,20 @@
   <nav id="nav">
     <router-link :to="{ name: 'Home' }">Home</router-link> |
     <router-link :to="{ name: 'Technologies' }">Tecnologías</router-link> |
-    <router-link :to="{ name: 'About' }">About</router-link>
+    <router-link :to="{ name: 'Rates' }">Tarifas</router-link>
   </nav>
   <router-view />
 </template>
+
+<script>
+import store from "@/services/store.js";
+
+export default {
+  created() {
+    store.fillTechnologies();
+  },
+};
+</script>
 
 <style>
 #app {

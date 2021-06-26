@@ -12,20 +12,14 @@
 
 <script>
 // @ is an alias to /src
-import CalculatorServices from "@/services/CalculatorServices.js";
+import store from "@/services/store.js";
 
 export default {
   name: "Technologies",
   data() {
     return {
-      technologies: null,
+      technologies: store.technologies,
     };
-  },
-
-  mounted() {
-    CalculatorServices.getTechnologies()
-      .then((response) => (this.technologies = response.data))
-      .catch((error) => console.log(error));
   },
 };
 </script>

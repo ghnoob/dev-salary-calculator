@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Technologies from "../views/Technologies.vue";
+import Rates from "../views/Rates.vue";
 
 const routes = [
   {
@@ -13,9 +14,9 @@ const routes = [
     component: Technologies,
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue"),
+    path: "/rates",
+    name: "Rates",
+    component: Rates,
   },
 ];
 

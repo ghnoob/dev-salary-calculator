@@ -9,4 +9,8 @@ export default {
   getTechnologies() {
     return apiClient.get("/technologies");
   },
+
+  getRates() {
+    return apiClient.get("/rates");
+  },
 };
