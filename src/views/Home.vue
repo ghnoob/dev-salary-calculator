@@ -1,11 +1,11 @@
 <template>
-  <h1>Calculadora de salarios</h1>
+  <h2>Página principal</h2>
   <p>¿Qué desea hacer?</p>
   <nav>
     <router-link class="link" :to="{ name: 'Technologies' }">
       Consultar las tecnologías disponibles
     </router-link>
-    <router-link class="link" :to="{ name: 'Rates' }">
+    <router-link class="link" :to="{ name: 'RateList' }">
       Consultar las tarifas
     </router-link>
   </nav>

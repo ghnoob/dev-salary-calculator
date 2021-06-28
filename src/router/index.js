@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Home from "../views/Home.vue";
 import Technologies from "../views/Technologies.vue";
-import Rates from "../views/Rates.vue";
+import RateList from "../views/RateList.vue";
+import NewRate from "../views/NewRate.vue";
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: () => import("../views/Home.vue"),
+    component: Home,
   },
   {
     path: "/techonologies",
@@ -16,7 +18,19 @@ const routes = [
   {
     path: "/rates",
     name: "Rates",
-    component: Rates,
+    component: () => import("../views/Rates.vue"),
+    children: [
+      {
+        path: "",
+        name: "RateList",
+        component: RateList,
+      },
+      {
+        path: "new",
+        name: "NewRate",
+        component: NewRate,
+      },
+    ],
   },
 ];
 

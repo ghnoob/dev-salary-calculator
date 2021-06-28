@@ -13,4 +13,8 @@ export default {
   getRates() {
     return apiClient.get("/rates");
   },
+
+  postRate(rate) {
+    return apiClient.post("/rates", rate);
+  },
 };

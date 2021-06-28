@@ -1,4 +1,5 @@
 <template>
+  <h2>Tecnologías</h2>
   <div class="technologies">
     <span
       class="tech-card"
