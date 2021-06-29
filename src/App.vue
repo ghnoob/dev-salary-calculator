@@ -12,6 +12,7 @@
 export default {
   mounted() {
     this.$store.commit("pullTechnologies");
+    this.$store.commit("pullRates");
   },
 };
 </script>

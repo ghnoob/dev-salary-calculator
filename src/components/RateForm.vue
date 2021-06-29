@@ -72,6 +72,7 @@ export default {
   data() {
     return {
       newRate: {
+        id: null,
         technology_id: null,
         seniority: "",
         language: "",
@@ -84,6 +85,7 @@ export default {
 
   methods: {
     submit() {
+      this.newRate.id = this.highestId;
       this.$emit("submit", this.newRate);
       this.$router.push({ name: "RateList" });
     },
@@ -92,6 +94,12 @@ export default {
   computed: {
     technologies() {
       return this.$store.state.technologies;
+    },
+    rates() {
+      return this.$store.state.rates;
+    },
+    highestId() {
+      return Math.max(...this.rates.map((rate) => rate.id)) + 1;
     },
   },
 };

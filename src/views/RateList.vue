@@ -31,21 +31,7 @@
 </template>
 
 <script>
-import CalculatorServices from "@/services/CalculatorServices.js";
-
 export default {
-  data() {
-    return {
-      rates: [],
-    };
-  },
-
-  mounted() {
-    CalculatorServices.getRates()
-      .then((response) => (this.rates = response.data))
-      .catch((error) => console.error(error));
-  },
-
   methods: {
     getTechnologyName(id) {
       const tech = this.technologies.find((tech) => tech.id === id);
@@ -75,6 +61,9 @@ export default {
   computed: {
     technologies() {
       return this.$store.state.technologies;
+    },
+    rates() {
+      return this.$store.state.rates;
     },
   },
 };
