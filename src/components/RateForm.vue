@@ -67,8 +67,17 @@
 </template>
 
 <script>
+import CalculatorServices from "@/services/CalculatorServices.js";
+
 export default {
   name: "RateForm",
+  props: {
+    id: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+  },
   data() {
     return {
       newRate: {
@@ -83,9 +92,17 @@ export default {
     };
   },
 
+  mounted() {
+    if (this.id !== null) {
+      CalculatorServices.getRateById(this.id)
+        .then((response) => (this.newRate = response.data))
+        .catch((error) => console.error(error));
+    }
+  },
+
   methods: {
     submit() {
-      this.newRate.id = this.highestId;
+      if (this.id === null) this.newRate.id = this.highestId;
       this.$emit("submit", this.newRate);
       this.$router.push({ name: "RateList" });
     },

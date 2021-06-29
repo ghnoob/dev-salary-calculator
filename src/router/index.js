@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import Technologies from "../views/Technologies.vue";
 import RateList from "../views/RateList.vue";
 import NewRate from "../views/NewRate.vue";
+import EditRate from "../views/EditRate.vue";
 
 const routes = [
   {
@@ -29,6 +30,12 @@ const routes = [
         path: "new",
         name: "NewRate",
         component: NewRate,
+      },
+      {
+        path: "edit",
+        name: "EditRate",
+        props: true,
+        component: EditRate,
       },
     ],
   },

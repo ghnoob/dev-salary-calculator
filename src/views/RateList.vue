@@ -11,7 +11,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="rate in rates" :key="rate.id">
+      <tr
+        v-for="rate in rates"
+        :key="rate.id"
+        @click="rowClick(rate)"
+        :class="{ selected: selectedRateId === rate.id }"
+      >
         <td>
           {{ getTechnologyName(rate.technology_id) }}
         </td>
@@ -25,13 +30,22 @@
   </table>
   <div class="buttons-container">
     <router-link :to="{ name: 'NewRate' }">
-      <button>Nuevo</button>
+      <button type="button">Nuevo</button>
+    </router-link>
+    <router-link :to="{ name: 'EditRate', query: { id: selectedRateId } }">
+      <button type="button" :disabled="selectedRateId === null">Editar</button>
     </router-link>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      selectedRateId: null,
+    };
+  },
+
   methods: {
     getTechnologyName(id) {
       const tech = this.technologies.find((tech) => tech.id === id);
@@ -56,6 +70,11 @@ export default {
       if (language === "english") return "Inglés";
       return "";
     },
+
+    rowClick(rate) {
+      if (this.selectedRateId !== rate.id) this.selectedRateId = rate.id;
+      else this.selectedRate = null;
+    },
   },
 
   computed: {
@@ -76,6 +95,7 @@ table.green-table {
   width: 75%;
   text-align: center;
   margin: auto;
+  cursor: default;
 }
 
 table.green-table td,
@@ -135,5 +155,21 @@ table.green-table tfoot .links a {
   flex-flow: row wrap;
   justify-content: flex-end;
   margin: 30px;
+}
+
+.selected {
+  background-color: #7cfc00;
+}
+
+button {
+  margin: 2px;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: default;
 }
 </style>
