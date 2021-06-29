@@ -14,7 +14,7 @@
       <tr
         v-for="rate in rates"
         :key="rate.id"
-        @click="rowClick(rate)"
+        @click="rowClick(rate.id)"
         :class="{ selected: selectedRateId === rate.id }"
       >
         <td>
@@ -35,10 +35,19 @@
     <router-link :to="{ name: 'EditRate', query: { id: selectedRateId } }">
       <button type="button" :disabled="selectedRateId === null">Editar</button>
     </router-link>
+    <button
+      type="button"
+      :disabled="selectedRateId === null"
+      @click="deleteRate"
+    >
+      Eliminar
+    </button>
   </div>
 </template>
 
 <script>
+import CalculatorServices from "@/services/CalculatorServices.js";
+
 export default {
   data() {
     return {
@@ -71,9 +80,17 @@ export default {
       return "";
     },
 
-    rowClick(rate) {
-      if (this.selectedRateId !== rate.id) this.selectedRateId = rate.id;
-      else this.selectedRate = null;
+    rowClick(id) {
+      if (this.selectedRateId !== id) this.selectedRateId = id;
+      else this.selectedRateId = null;
+    },
+
+    deleteRate() {
+      if (confirm("¿Desea borrar el registro seleccionado?")) {
+        CalculatorServices.deleteRate(this.selectedRateId)
+          .then(() => this.$store.commit("pullTechnologies"))
+          .catch((error) => console.error(error));
+      }
     },
   },
 
@@ -150,21 +167,39 @@ table.green-table tfoot .links a {
 }
 
 .buttons-container {
-  width: 85%;
+  width: max-content;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-end;
-  margin: 30px;
+  justify-content: space-around;
+  margin: auto;
+  margin-top: 20px;
 }
 
 .selected {
-  background-color: #7cfc00;
+  background-color: #42b983;
 }
 
 button {
+  background-color: #44c767;
+  border-radius: 28px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 17px;
+  padding: 10px 25px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
   margin: 2px;
 }
-
+button:hover {
+  background-color: #5cbf2a;
+}
+button:active {
+  position: relative;
+  top: 1px;
+}
 button:disabled,
 button[disabled] {
   border: 1px solid #999999;

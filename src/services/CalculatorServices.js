@@ -25,4 +25,8 @@ export default {
   putRate(id, rate) {
     return apiClient.put(`/rates/${id}`, rate);
   },
+
+  deleteRate(id) {
+    return apiClient.delete(`/rates/${id}`);
+  },
 };
