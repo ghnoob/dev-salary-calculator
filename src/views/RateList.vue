@@ -36,15 +36,11 @@ import CalculatorServices from "@/services/CalculatorServices.js";
 export default {
   data() {
     return {
-      technologies: [],
       rates: [],
     };
   },
 
   mounted() {
-    CalculatorServices.getTechnologies()
-      .then((response) => (this.technologies = response.data))
-      .catch((error) => console.error(error));
     CalculatorServices.getRates()
       .then((response) => (this.rates = response.data))
       .catch((error) => console.error(error));
@@ -73,6 +69,12 @@ export default {
       if (language === "spanish") return "Español";
       if (language === "english") return "Inglés";
       return "";
+    },
+  },
+
+  computed: {
+    technologies() {
+      return this.$store.state.technologies;
     },
   },
 };

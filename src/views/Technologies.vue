@@ -12,20 +12,11 @@
 </template>
 
 <script>
-import CalculatorServices from "@/services/CalculatorServices.js";
-
 export default {
-  name: "Technologies",
-  data() {
-    return {
-      technologies: [],
-    };
-  },
-
-  mounted() {
-    CalculatorServices.getTechnologies()
-      .then((response) => (this.technologies = response.data))
-      .catch((error) => console.error(error));
+  computed: {
+    technologies() {
+      return this.$store.state.technologies;
+    },
   },
 };
 </script>

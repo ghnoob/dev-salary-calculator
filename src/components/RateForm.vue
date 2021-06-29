@@ -67,8 +67,6 @@
 </template>
 
 <script>
-import CalculatorServices from "@/services/CalculatorServices.js";
-
 export default {
   name: "RateForm",
   data() {
@@ -81,20 +79,19 @@ export default {
         gross_margin_in_cents: null,
         currency: "",
       },
-      technologies: [],
     };
-  },
-
-  mounted() {
-    CalculatorServices.getTechnologies()
-      .then((response) => (this.technologies = response.data))
-      .catch((error) => console.error(error));
   },
 
   methods: {
     submit() {
       this.$emit("submit", this.newRate);
       this.$router.push({ name: "RateList" });
+    },
+  },
+
+  computed: {
+    technologies() {
+      return this.$store.state.technologies;
     },
   },
 };
