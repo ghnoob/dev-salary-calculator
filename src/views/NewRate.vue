@@ -15,7 +15,7 @@ export default {
   methods: {
     addRate(rate) {
       CalculatorServices.postRate(rate)
-        .then(() => this.$store.commit("pullTechnologies"))
+        .then(() => this.$store.commit("pullRates"))
         .catch((error) => console.error(error));
     },
   },

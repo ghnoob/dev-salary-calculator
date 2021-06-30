@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  mounted() {
+  beforeCreate() {
     this.$store.commit("pullTechnologies");
     this.$store.commit("pullRates");
   },

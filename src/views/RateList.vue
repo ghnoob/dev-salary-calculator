@@ -88,7 +88,7 @@ export default {
     deleteRate() {
       if (confirm("¿Desea borrar el registro seleccionado?")) {
         CalculatorServices.deleteRate(this.selectedRateId)
-          .then(() => this.$store.commit("pullTechnologies"))
+          .then(() => this.$store.commit("pullRates"))
           .catch((error) => console.error(error));
       }
     },
