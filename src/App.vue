@@ -37,12 +37,11 @@ export default {
 }
 
 .app {
-  display: flex;
-  flex-flow: column wrap;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-
-.app .content {
+.content {
   flex: 1;
 }
 
