@@ -1,6 +1,6 @@
 <template>
   <h3>Editar Tarifa</h3>
-  <rate-form :id="id" @submit="editRate" />
+  <rate-form :id="id" @submitted="editRate" />
 </template>
 
 <script>
@@ -15,7 +15,10 @@ export default {
   methods: {
     editRate(rate) {
       CalculatorServices.putRate(this.id, rate)
-        .then(() => this.$store.commit("pullTechnologies"))
+        .then(() => {
+          this.$store.commit("pullTechnologies");
+          this.$router.push({ name: "RateList" });
+        })
         .catch((error) => console.error(error));
     },
   },

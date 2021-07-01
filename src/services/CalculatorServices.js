@@ -15,7 +15,7 @@ export default {
   },
 
   getRateById(id) {
-    return apiClient.get(`/rates/${id}`);
+    return apiClient.get(`/rates/id/${id}`);
   },
 
   postRate(rate) {
@@ -23,10 +23,10 @@ export default {
   },
 
   putRate(id, rate) {
-    return apiClient.put(`/rates/${id}`, rate);
+    return apiClient.put(`/rates/id/${id}`, rate);
   },
 
   deleteRate(id) {
-    return apiClient.delete(`/rates/${id}`);
+    return apiClient.delete(`/rates/id/${id}`);
   },
 };

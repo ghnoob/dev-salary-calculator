@@ -1,6 +1,6 @@
 <template>
   <h3>Ingresar datos de la nueva tarifa</h3>
-  <rate-form @submit="addRate" />
+  <rate-form @submitted="addRate" />
 </template>
 
 <script>
@@ -15,7 +15,10 @@ export default {
   methods: {
     addRate(rate) {
       CalculatorServices.postRate(rate)
-        .then(() => this.$store.commit("pullRates"))
+        .then(() => {
+          this.$store.commit("pullRates");
+          this.$router.push({ name: "RateList" });
+        })
         .catch((error) => console.error(error));
     },
   },

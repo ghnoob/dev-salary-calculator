@@ -95,7 +95,7 @@ export default {
   mounted() {
     if (this.id !== null) {
       CalculatorServices.getRateById(this.id)
-        .then((response) => (this.newRate = response.data))
+        .then((response) => (this.newRate = response.data[0]))
         .catch((error) => console.error(error));
     }
   },
@@ -103,8 +103,7 @@ export default {
   methods: {
     submit() {
       if (this.id === null) this.newRate.id = this.highestId;
-      this.$emit("submit", this.newRate);
-      this.$router.push({ name: "RateList" });
+      this.$emit("submitted", this.newRate);
     },
   },
 
