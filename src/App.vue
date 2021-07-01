@@ -5,7 +5,8 @@
       <nav id="nav">
         <router-link :to="{ name: 'Home' }">Home</router-link> |
         <router-link :to="{ name: 'Technologies' }">Tecnologías</router-link> |
-        <router-link :to="{ name: 'RateList' }">Tarifas</router-link>
+        <router-link :to="{ name: 'RateList' }">Tarifas</router-link> |
+        <router-link :to="{ name: 'CalcRatesParams' }">Calcular</router-link>
       </nav>
       <router-view />
     </div>

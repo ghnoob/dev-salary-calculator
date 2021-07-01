@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Technologies from "../views/Technologies.vue";
+import Rates from "../views/Rates.vue";
 import RateList from "../views/RateList.vue";
 import NewRate from "../views/NewRate.vue";
 import EditRate from "../views/EditRate.vue";
+import CalcRates from "../views/CalcRates.vue";
+import CalcRatesParams from "../views/CalcRatesParams.vue";
+import CalcRatesResult from "../views/CalcRatesResult.vue";
 
 const routes = [
   {
@@ -19,7 +23,7 @@ const routes = [
   {
     path: "/rates",
     name: "Rates",
-    component: () => import("../views/Rates.vue"),
+    component: Rates,
     children: [
       {
         path: "",
@@ -36,6 +40,23 @@ const routes = [
         name: "EditRate",
         props: true,
         component: EditRate,
+      },
+      {
+        path: "calculate",
+        name: "CalcRates",
+        component: CalcRates,
+        children: [
+          {
+            path: "",
+            name: "CalcRatesParams",
+            component: CalcRatesParams,
+          },
+          {
+            path: "result",
+            name: "CalcRatesResult",
+            component: CalcRatesResult,
+          },
+        ],
       },
     ],
   },

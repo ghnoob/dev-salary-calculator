@@ -11,6 +11,9 @@
     <router-link class="link" :to="{ name: 'NewRate' }">
       Agregar una nueva tarifa
     </router-link>
+    <router-link class="link" :to="{ name: 'CalcRatesParams' }">
+      Calcular tarifas
+    </router-link>
   </nav>
 </template>
 

@@ -4,6 +4,7 @@
       <li class="form-row">
         <label for="technology">Tecnología</label>
         <select v-model.number="newRate.technology_id" required>
+          <option v-if="search" value="all">Todas</option>
           <option
             id="technology"
             v-for="tech in technologies"
@@ -17,6 +18,7 @@
       <li class="form-row">
         <label for="seniority">Seniority</label>
         <select id="seniority" v-model="newRate.seniority" required>
+          <option v-if="search" value="all">Todas</option>
           <option value="junior">Junior</option>
           <option value="semi_senior">Semi senior</option>
           <option value="senior">Senior</option>
@@ -25,11 +27,12 @@
       <li class="form-row">
         <label for="language">Idioma</label>
         <select id="language" v-model="newRate.language" required>
+          <option v-if="search" value="all">Todos</option>
           <option value="spanish">Español</option>
           <option value="english">Inglés</option>
         </select>
       </li>
-      <li class="form-row">
+      <li class="form-row" v-if="!search">
         <label for="salary">Salario promedio (centavos)</label>
         <input
           type="number"
@@ -39,7 +42,7 @@
           required
         />
       </li>
-      <li class="form-row">
+      <li class="form-row" v-if="!search">
         <label for="gross-margin">Margen bruto (centavos)</label>
         <input
           type="number"
@@ -58,9 +61,7 @@
       </li>
       <li class="form-row">
         <button type="submit">Aceptar</button>
-        <router-link :to="{ name: 'RateList' }">
-          <button type="button">Cancelar</button>
-        </router-link>
+        <button type="button" @click="cancel">Cancelar</button>
       </li>
     </ul>
   </form>
@@ -76,6 +77,11 @@ export default {
       type: Number,
       required: false,
       default: null,
+    },
+    search: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   data() {
@@ -104,6 +110,10 @@ export default {
     submit() {
       if (this.id === null) this.newRate.id = this.highestId;
       this.$emit("submitted", this.newRate);
+    },
+
+    cancel() {
+      this.$router.go(-1);
     },
   },
 
