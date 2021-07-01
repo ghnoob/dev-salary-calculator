@@ -15,7 +15,7 @@
 export default {
   computed: {
     technologies() {
-      return this.$store.state.technologies;
+      return this.$store.state.technologies.filter((tech) => tech.id !== null);
     },
   },
 };

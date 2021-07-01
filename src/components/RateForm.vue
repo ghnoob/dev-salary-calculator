@@ -109,10 +109,10 @@ export default {
 
   computed: {
     technologies() {
-      return this.$store.state.technologies;
+      return this.$store.state.technologies.filter((tech) => tech.id !== null);
     },
     rates() {
-      return this.$store.state.rates;
+      return this.$store.state.rates.filter((rate) => rate.id !== null);
     },
     highestId() {
       return Math.max(...this.rates.map((rate) => rate.id)) + 1;

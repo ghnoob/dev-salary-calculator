@@ -22,8 +22,8 @@
         </td>
         <td>{{ getSeniority(rate.seniority) }}</td>
         <td>{{ getLanguage(rate.language) }}</td>
-        <td>${{ rate.average_salary_in_cents / 100 }}</td>
-        <td>${{ rate.gross_margin_in_cents / 100 }}</td>
+        <td>${{ toCurrencyUnits(rate.average_salary_in_cents) }}</td>
+        <td>${{ toCurrencyUnits(rate.gross_margin_in_cents) }}</td>
         <td>{{ rate.currency }}</td>
       </tr>
     </tbody>
@@ -58,7 +58,8 @@ export default {
   methods: {
     getTechnologyName(id) {
       const tech = this.technologies.find((tech) => tech.id === id);
-      return tech.name;
+      if (tech !== undefined) return tech.name;
+      return "";
     },
 
     getSeniority(seniority) {
@@ -80,6 +81,10 @@ export default {
       return "";
     },
 
+    toCurrencyUnits(amountInCents) {
+      return amountInCents / 100;
+    },
+
     rowClick(id) {
       if (this.selectedRateId !== id) this.selectedRateId = id;
       else this.selectedRateId = null;
@@ -96,10 +101,10 @@ export default {
 
   computed: {
     technologies() {
-      return this.$store.state.technologies;
+      return this.$store.state.technologies.filter((tech) => tech.id !== null);
     },
     rates() {
-      return this.$store.state.rates;
+      return this.$store.state.rates.filter((rate) => rate.id !== null);
     },
   },
 };
