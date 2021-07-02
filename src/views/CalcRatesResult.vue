@@ -25,15 +25,15 @@
         <table>
           <tr>
             <th>Salario promedio</th>
-            <td>${{ averageSalary }}</td>
+            <td>${{ averageSalary.toFixed(2) }}</td>
           </tr>
           <tr>
             <th>Márgen bruto promedio</th>
-            <td>${{ averageGrossMargin }}</td>
+            <td>${{ averageGrossMargin.toFixed(2) }}</td>
           </tr>
           <tr>
             <th>Costo total promedio</th>
-            <td>${{ totalCost }}</td>
+            <td>${{ totalCost.toFixed(2) }}</td>
           </tr>
         </table>
       </div>
@@ -96,14 +96,20 @@ export default {
       return this.query.currency.toUpperCase();
     },
     averageSalary() {
-      const reducer = (a, b) =>
-        a.average_salary_in_cents + b.average_salary_in_cents;
-      return this.queryResult.reduce(reducer) / 100 / this.queryResult.length;
+      let sum = 0;
+      for (let rate of this.queryResult)
+        if (!isNaN(rate.average_salary_in_cents))
+          sum += rate.average_salary_in_cents;
+
+      return sum / 100 / this.queryResult.length;
     },
     averageGrossMargin() {
-      const reducer = (a, b) =>
-        a.gross_margin_in_cents + b.gross_margin_in_cents;
-      return this.queryResult.reduce(reducer) / 100 / this.queryResult.length;
+      let sum = 0;
+      for (let rate of this.queryResult)
+        if (!isNaN(rate.gross_margin_in_cents))
+          sum += rate.gross_margin_in_cents;
+
+      return sum / 100 / this.queryResult.length;
     },
     totalCost() {
       return this.averageSalary + this.averageGrossMargin;
