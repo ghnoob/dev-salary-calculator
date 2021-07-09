@@ -99,14 +99,17 @@ export default {
   },
 
   mounted() {
-    if (this.id !== null) {
-      CalculatorServices.getRateById(this.id)
-        .then((response) => (this.newRate = response.data[0]))
-        .catch((error) => console.error(error));
-    }
+    this.onMount();
   },
 
   methods: {
+    async onMount() {
+      if (this.id !== null) {
+        const response = await CalculatorServices.getRateById(this.id);
+        this.newRate = response.data[0];
+      }
+    },
+
     submit() {
       if (this.id === null) this.newRate.id = this.highestId;
       this.$emit("submitted", this.newRate);

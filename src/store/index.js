@@ -7,15 +7,13 @@ export default createStore({
     rates: [],
   },
   mutations: {
-    pullTechnologies(state) {
-      CalculatorServices.getTechnologies()
-        .then((response) => (state.technologies = response.data))
-        .catch((error) => console.error(error));
+    async pullTechnologies(state) {
+      const response = await CalculatorServices.getTechnologies();
+      state.technologies = response.data;
     },
-    pullRates(state) {
-      CalculatorServices.getRates()
-        .then((response) => (state.rates = response.data))
-        .catch((error) => console.error(error));
+    async pullRates(state) {
+      const response = await CalculatorServices.getRates();
+      state.rates = response.data;
     },
   },
   actions: {},

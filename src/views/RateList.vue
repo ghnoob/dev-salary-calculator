@@ -95,13 +95,10 @@ export default {
       else this.selectedRateId = null;
     },
 
-    deleteRate() {
-      // test
-      console.log("tets");
+    async deleteRate() {
       if (confirm("¿Desea borrar el registro seleccionado?")) {
-        CalculatorServices.deleteRate(this.selectedRateId)
-          .then(() => this.$store.commit("pullRates"))
-          .catch((error) => console.error(error));
+        await CalculatorServices.deleteRate(this.selectedRateId);
+        this.$store.commit("pullRates");
       }
     },
   },

@@ -13,13 +13,10 @@ export default {
   },
 
   methods: {
-    addRate(rate) {
-      CalculatorServices.postRate(rate)
-        .then(() => {
-          this.$store.commit("pullRates");
-          this.$router.push({ name: "RateList" });
-        })
-        .catch((error) => console.error(error));
+    async addRate(rate) {
+      await CalculatorServices.postRate(rate);
+      await this.$store.commit("pullRates");
+      this.$router.push({ name: "RateList" });
     },
   },
 };

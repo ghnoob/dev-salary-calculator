@@ -60,9 +60,14 @@ export default {
   },
 
   created() {
-    CalculatorServices.searchRates(this.query)
-      .then((response) => (this.queryResult = response.data))
-      .catch((error) => console.error(error));
+    this.searchRates();
+  },
+
+  methods: {
+    async searchRates() {
+      const response = await CalculatorServices.searchRates(this.query);
+      this.queryResult = response.data;
+    },
   },
 
   computed: {

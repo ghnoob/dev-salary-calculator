@@ -13,13 +13,10 @@ export default {
   },
 
   methods: {
-    editRate(rate) {
-      CalculatorServices.putRate(this.id, rate)
-        .then(() => {
-          this.$store.commit("pullTechnologies");
-          this.$router.push({ name: "RateList" });
-        })
-        .catch((error) => console.error(error));
+    async editRate(rate) {
+      await CalculatorServices.putRate(this.id, rate);
+      await this.$store.commit("pullRates");
+      this.$router.push({ name: "RateList" });
     },
   },
 
