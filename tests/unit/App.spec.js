@@ -7,14 +7,14 @@ const $store = {
 
 describe("App.vue", () => {
   test("Se cargan las tecnologías y las tarifas del store", async () => {
-    const wrapper = shallowMount(App, {
+    shallowMount(App, {
       global: {
         mocks: {
           $store,
         },
       },
     });
-    await wrapper.trigger("beforeCreate");
+
     expect($store.commit).toHaveBeenCalled();
   });
 });
