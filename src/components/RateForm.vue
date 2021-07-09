@@ -1,12 +1,11 @@
 <template>
-  <form v-if="technologies" @submit.prevent="submit">
+  <form @submit.prevent="submit">
     <ul class="wrapper">
       <li class="form-row">
         <label for="technology">Tecnología</label>
-        <select v-model.number="newRate.technology_id" required>
-          <option v-if="search" value="all">Todas</option>
+        <select id="technology" v-model.number="newRate.technology_id" required>
+          <option v-if="search" value="all" class="search-all">Todas</option>
           <option
-            id="technology"
             v-for="tech in technologies"
             :key="tech.id"
             :value="tech.id"
@@ -18,7 +17,7 @@
       <li class="form-row">
         <label for="seniority">Seniority</label>
         <select id="seniority" v-model="newRate.seniority" required>
-          <option v-if="search" value="all">Todas</option>
+          <option v-if="search" value="all" class="search-all">Todas</option>
           <option value="junior">Junior</option>
           <option value="semi_senior">Semi senior</option>
           <option value="senior">Senior</option>
@@ -27,7 +26,7 @@
       <li class="form-row">
         <label for="language">Idioma</label>
         <select id="language" v-model="newRate.language" required>
-          <option v-if="search" value="all">Todos</option>
+          <option v-if="search" value="all" class="search-all">Todos</option>
           <option value="spanish">Español</option>
           <option value="english">Inglés</option>
         </select>
@@ -61,7 +60,7 @@
       </li>
       <li class="form-row">
         <button type="submit">Aceptar</button>
-        <button type="button" @click="cancel">Cancelar</button>
+        <button id ="cancel" type="button" @click="cancel">Cancelar</button>
       </li>
     </ul>
   </form>
