@@ -105,8 +105,13 @@ export default {
   methods: {
     async onMount() {
       if (this.id !== null) {
-        const response = await CalculatorServices.getRateById(this.id);
-        this.newRate = response.data[0];
+        try {
+          const response = await CalculatorServices.getRateById(this.id);
+          if (response.data.length > 0) this.newRate = response.data[0];
+          else this.$router.push({ name: "NotFound" });
+        } catch {
+          this.$router.push({ name: "NotFound" });
+        }
       }
     },
 
