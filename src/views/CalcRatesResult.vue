@@ -1,8 +1,8 @@
 <template>
   <div class="result">
     <h4>Información</h4>
-    <div v-if="Object.keys(query).length > 0">
-      <table>
+    <div>
+      <table id="params">
         <tr>
           <th>Tecnología</th>
           <td>{{ technologyName }}</td>
@@ -20,7 +20,7 @@
           <td>{{ currency }}</td>
         </tr>
       </table>
-      <div v-if="queryResult.length > 0">
+      <div v-if="queryHasResults" id="query-results">
         <h4>Costos</h4>
         <table>
           <tr>
@@ -37,15 +37,12 @@
           </tr>
         </table>
       </div>
-      <p v-else>
+      <p v-else id="no-query-results">
         <strong>
           No se encontraron tarifas con los criterios establecidos
         </strong>
       </p>
     </div>
-    <p v-else>
-      <strong>Error: no se han proporcionado criterios de búsqueda</strong>
-    </p>
   </div>
 </template>
 
@@ -59,7 +56,7 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
     this.searchRates();
   },
 
@@ -95,7 +92,7 @@ export default {
       const language = this.query.language;
       if (language === undefined) return "Todos";
       if (language === "spanish") return "Español";
-      return "English";
+      return "Inglés";
     },
     currency() {
       return this.query.currency.toUpperCase();
@@ -119,6 +116,9 @@ export default {
     totalCost() {
       return this.averageSalary + this.averageGrossMargin;
     },
+    queryHasResults() {
+      return this.queryResult.length > 0;
+    }
   },
 
   watch: {
