@@ -5,11 +5,7 @@
         <label for="technology">Tecnología</label>
         <select id="technology" v-model.number="newRate.technology_id" required>
           <option v-if="search" value="all" class="search-all">Todas</option>
-          <option
-            v-for="tech in technologies"
-            :key="tech.id"
-            :value="tech.id"
-          >
+          <option v-for="tech in technologies" :key="tech.id" :value="tech.id">
             {{ tech.name }}
           </option>
         </select>
@@ -60,7 +56,7 @@
       </li>
       <li class="form-row">
         <button type="submit">Aceptar</button>
-        <button id ="cancel" type="button" @click="cancel">Cancelar</button>
+        <button id="cancel" type="button" @click="cancel">Cancelar</button>
       </li>
     </ul>
   </form>

@@ -118,7 +118,7 @@ export default {
     },
     queryHasResults() {
       return this.queryResult.length > 0;
-    }
+    },
   },
 
   watch: {
