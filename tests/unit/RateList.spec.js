@@ -50,6 +50,7 @@ describe("RateList", () => {
     const wrapper = shallowMount(RateList, {
       global: {
         plugins: [emptyStore],
+        stubs: ["router-link"],
       },
     });
     expect(wrapper.find("table").exists()).toBe(false);
@@ -59,6 +60,7 @@ describe("RateList", () => {
     const wrapper = shallowMount(RateList, {
       global: {
         plugins: [store],
+        stubs: ["router-link"],
       },
     });
     expect(wrapper.find("table").exists()).toBe(true);
@@ -68,6 +70,7 @@ describe("RateList", () => {
     const wrapper = shallowMount(RateList, {
       global: {
         plugins: [store],
+        stubs: ["router-link"],
       },
     });
     const cells = wrapper.findAll("td");
@@ -95,6 +98,7 @@ describe("RateList", () => {
     const wrapper = shallowMount(RateList, {
       global: {
         plugins: [store],
+        stubs: ["router-link"],
       },
     });
 

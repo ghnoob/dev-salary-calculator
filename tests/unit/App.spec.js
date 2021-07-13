@@ -12,6 +12,7 @@ describe("App.vue", () => {
         mocks: {
           $store,
         },
+        stubs: ["router-link", "router-view"],
       },
     });
 
