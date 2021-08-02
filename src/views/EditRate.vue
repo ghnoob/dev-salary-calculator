@@ -1,6 +1,6 @@
 <template>
   <h3>Editar Tarifa</h3>
-  <rate-form :id="id" @submitted="editRate" />
+  <rate-form :id="id" :edit="true" @submitted="editRate" />
 </template>
 
 <script>
@@ -14,15 +14,15 @@ export default {
 
   methods: {
     async editRate(rate) {
-      await CalculatorServices.putRate(this.id, rate);
-      await this.$store.commit("pullRates");
+      await CalculatorServices.putRate(rate);
+      await this.$store.commit("editRate", rate);
       this.$router.push({ name: "RateList" });
     },
   },
 
   computed: {
     id() {
-      return parseInt(this.$route.query.id);
+      return this.$route.query.id;
     },
   },
 };

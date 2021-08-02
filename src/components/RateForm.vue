@@ -3,7 +3,7 @@
     <ul class="wrapper">
       <li class="form-row">
         <label for="technology">Tecnología</label>
-        <select id="technology" v-model.number="newRate.technology_id" required>
+        <select id="technology" v-model="newRate.technology_id" required>
           <option v-if="search" value="all" class="search-all">Todas</option>
           <option v-for="tech in technologies" :key="tech.id" :value="tech.id">
             {{ tech.name }}
@@ -33,7 +33,7 @@
           type="number"
           id="salary"
           min="0"
-          v-model.number="newRate.average_salary_in_cents"
+          v-model="newRate.average_salary_in_cents"
           required
         />
       </li>
@@ -43,7 +43,7 @@
           type="number"
           id="gross-margin"
           min="0"
-          v-model.number="newRate.gross_margin_in_cents"
+          v-model="newRate.gross_margin_in_cents"
           required
         />
       </li>
@@ -63,15 +63,13 @@
 </template>
 
 <script>
-import CalculatorServices from "@/services/CalculatorServices.js";
-
 export default {
   name: "RateForm",
   props: {
-    id: {
-      type: Number,
+    edit: {
+      type: Boolean,
       required: false,
-      default: null,
+      default: false,
     },
     search: {
       type: Boolean,
@@ -94,24 +92,20 @@ export default {
   },
 
   mounted() {
-    this.onMount();
-  },
-
-  methods: {
-    async onMount() {
-      if (this.id !== null) {
-        try {
-          const response = await CalculatorServices.getRateById(this.id);
-          if (response.data.length > 0) this.newRate = response.data[0];
-          else this.$router.push({ name: "NotFound" });
-        } catch {
-          this.$router.push({ name: "NotFound" });
-        }
+    if (this.edit) {
+      const rate = this.rates.find((item) => item.id === this.id);
+      if (rate !== undefined) {
+        this.newRate = rate;
+      } else {
+        this.$router.push({ name: "NotFound" });
       }
-    },
-
+    }
+  },
+  methods: {
     submit() {
-      if (this.id === null) this.newRate.id = this.highestId;
+      if (!this.edit) {
+        this.newRate.id = this.highestId;
+      }
       this.$emit("submitted", this.newRate);
     },
 
@@ -121,6 +115,9 @@ export default {
   },
 
   computed: {
+    id() {
+      return this.$route.query.id;
+    },
     technologies() {
       return this.$store.state.technologies.filter((tech) => tech.id !== null);
     },
@@ -128,7 +125,7 @@ export default {
       return this.$store.state.rates.filter((rate) => rate.id !== null);
     },
     highestId() {
-      return Math.max(...this.rates.map((rate) => rate.id)) + 1;
+      return (Math.max(...this.rates.map((rate) => rate.id)) + 1).toString();
     },
   },
 };

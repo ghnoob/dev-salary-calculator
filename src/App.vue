@@ -20,10 +20,19 @@
 </template>
 
 <script>
+import CalculatorServices from "@/services/CalculatorServices";
+
 export default {
-  beforeCreate() {
-    this.$store.commit("pullTechnologies");
-    this.$store.commit("pullRates");
+  mounted() {
+    this.onMount();
+  },
+  methods: {
+    async onMount() {
+      const technologies = await CalculatorServices.getTechnologies();
+      const rates = await CalculatorServices.getRates();
+      this.$store.commit("setTechnologies", technologies.data);
+      this.$store.commit("setRates", rates.data);
+    },
   },
 };
 </script>

@@ -98,7 +98,7 @@ export default {
     async deleteRate() {
       if (confirm("¿Desea borrar el registro seleccionado?")) {
         await CalculatorServices.deleteRate(this.selectedRateId);
-        this.$store.commit("pullRates");
+        this.$store.commit("deleteRate", this.selectedRateId);
       }
     },
   },

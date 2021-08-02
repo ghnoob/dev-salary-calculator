@@ -15,7 +15,7 @@ export default {
   methods: {
     async addRate(rate) {
       await CalculatorServices.postRate(rate);
-      await this.$store.commit("pullRates");
+      this.$store.commit("pushRate", rate);
       this.$router.push({ name: "RateList" });
     },
   },

@@ -12,22 +12,37 @@ describe("NewRate", () => {
     push: jest.fn(),
   };
 
-  test("Cuando se reciben los datos del formulario se llama a la API", async () => {
-    const spy = jest
-      .spyOn(CalculatorServices, "postRate")
-      .mockImplementation(() => ({ status: 200, data: [] }));
+  const mockRate = {
+    id: 3,
+    technology_id: 2,
+    seniority: "semi_senior",
+    language: "spanish",
+    average_salary_in_cents: "6500000",
+    gross_margin_in_cents: "99900",
+    currency: "ars",
+  };
 
+  beforeAll(() => {
+    CalculatorServices.postRate = jest.fn();
+  });
+
+  test("Cuando se reciben los datos del formulario se llama a la API", async () => {
     const wrapper = shallowMount(NewRate, {
       global: {
         mocks: { $store, $router },
       },
     });
 
-    await wrapper.findComponent(RateForm).vm.$emit("submitted");
+    await wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
 
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect($store.commit).toHaveBeenCalled();
+    expect(CalculatorServices.postRate).toHaveBeenCalled();
+    expect(CalculatorServices.postRate).toHaveBeenCalledWith(mockRate);
+
     await flushPromises();
+
+    expect($store.commit).toHaveBeenCalled();
+    expect($store.commit).toHaveBeenCalledWith("pushRate", mockRate);
+
     expect($router.push).toHaveBeenCalled();
     expect($router.push).toHaveBeenCalledWith({ name: "RateList" });
   });

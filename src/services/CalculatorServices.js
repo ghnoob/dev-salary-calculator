@@ -17,16 +17,12 @@ export default {
     return apiClient.get("/rates");
   },
 
-  getRateById(id) {
-    return apiClient.get(`/rates/id/${id}`);
-  },
-
   postRate(rate) {
     return apiClient.post("/rates", rate);
   },
 
-  putRate(id, rate) {
-    return apiClient.put(`/rates/id/${id}`, rate);
+  putRate(rate) {
+    return apiClient.put(`/rates/id/${rate.id}`, rate);
   },
 
   deleteRate(id) {
