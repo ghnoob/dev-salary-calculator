@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import CalculatorServices from "@/services/CalculatorServices.js";
+import CalculatorServices from "../services/CalculatorServices.js";
 
 export default {
   data() {
@@ -63,26 +63,26 @@ export default {
   methods: {
     getTechnologyName(id) {
       const tech = this.technologies.find((tech) => tech.id === id);
-      if (tech !== undefined) return tech.name;
+      if (tech !== undefined) {
+        return tech.name;
+      }
       return "";
     },
 
     getSeniority(seniority) {
-      switch (seniority) {
-        case "junior":
-          return "Junior";
-        case "semi_senior":
-          return "Semi senior";
-        case "senior":
-          return "Senior";
-        default:
-          return "";
-      }
+      const capitalize = ([first, ...rest], lowerRest = false) =>
+        first.toUpperCase() +
+        (lowerRest ? rest.join("").toLowerCase() : rest.join(""));
+      return capitalize(seniority.replace("_", " "));
     },
 
     getLanguage(language) {
-      if (language === "spanish") return "Español";
-      if (language === "english") return "Inglés";
+      if (language === "spanish") {
+        return "Español";
+      }
+      if (language === "english") {
+        return "Inglés";
+      }
       return "";
     },
 
@@ -91,8 +91,11 @@ export default {
     },
 
     rowClick(id) {
-      if (this.selectedRateId !== id) this.selectedRateId = id;
-      else this.selectedRateId = null;
+      if (this.selectedRateId !== id) {
+        this.selectedRateId = id;
+      } else {
+        this.selectedRateId = null;
+      }
     },
 
     async deleteRate() {

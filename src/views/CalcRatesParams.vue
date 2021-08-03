@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import RateForm from "@/components/RateForm.vue";
+import RateForm from "../components/RateForm.vue";
 
 export default {
   components: {

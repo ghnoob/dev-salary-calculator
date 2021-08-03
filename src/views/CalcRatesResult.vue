@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import CalculatorServices from "@/services/CalculatorServices.js";
+import CalculatorServices from "../services/CalculatorServices.js";
 
 export default {
   data() {
@@ -76,22 +76,32 @@ export default {
     },
     technologyName() {
       const id = this.query.technology_id;
-      if (id === undefined) return "Todas";
+      if (id === undefined) {
+        return "Todas";
+      }
       const tech = this.technologies.find((tech) => tech.id === id);
-      if (tech !== undefined) return tech.name;
+      if (tech !== undefined) {
+        return tech.name;
+      }
       return "";
     },
     seniority() {
       const seniority = this.query.seniority;
-      if (seniority === undefined) return "Todas";
+      if (seniority === undefined) {
+        return "Todas";
+      }
       return (
         seniority.charAt(0).toUpperCase() + seniority.replace("_", " ").slice(1)
       );
     },
     language() {
       const language = this.query.language;
-      if (language === undefined) return "Todos";
-      if (language === "spanish") return "Español";
+      if (language === undefined) {
+        return "Todos";
+      }
+      if (language === "spanish") {
+        return "Español";
+      }
       return "Inglés";
     },
     currency() {

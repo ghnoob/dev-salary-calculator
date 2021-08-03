@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import CalculatorServices from "@/services/CalculatorServices";
+import CalculatorServices from "./services/CalculatorServices";
 
 export default {
   mounted() {

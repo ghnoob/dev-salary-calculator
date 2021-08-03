@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import RateForm from "@/components/RateForm.vue";
-import CalculatorServices from "@/services/CalculatorServices.js";
+import RateForm from "../components/RateForm.vue";
+import CalculatorServices from "../services/CalculatorServices.js";
 
 export default {
   components: {
