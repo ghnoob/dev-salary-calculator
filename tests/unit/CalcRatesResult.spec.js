@@ -1,10 +1,9 @@
 import { shallowMount, flushPromises } from "@vue/test-utils";
 import CalcRatesResult from "@/views/CalcRatesResult.vue";
 import CalculatorServices from "@/services/CalculatorServices.js";
-import { createStore } from "vuex";
 
 describe("CalcRatesResult", () => {
-  const store = createStore({
+  const $store = {
     state: {
       technologies: [
         { id: 1, name: "PHP" },
@@ -13,7 +12,7 @@ describe("CalcRatesResult", () => {
         { id: 4, name: "React.js" },
       ],
     },
-  });
+  };
 
   const mockDatabase = [
     {
@@ -49,31 +48,34 @@ describe("CalcRatesResult", () => {
     },
   };
 
-  const spy = jest
-    .spyOn(CalculatorServices, "searchRates")
-    .mockImplementation((query) => {
+  beforeAll(() => {
+    CalculatorServices.searchRates = jest.fn((query) => {
       const data = mockDatabase.filter((rate) => {
         for (let key of Object.keys(query)) {
-          if (query[key] !== rate[key]) return false;
+          if (query[key] !== rate[key]) {
+            return false;
+          }
         }
         return true;
       });
 
-      return { status: 200, data: data };
+      return { data };
     });
+  });
 
   afterEach(() => jest.clearAllMocks());
 
   test("Se debe mostrar un mensaje cuando no se encuentran resultados de búsqueda", async () => {
     const wrapper = shallowMount(CalcRatesResult, {
       global: {
-        plugins: [store],
-        mocks: { $route: emptyRoute },
+        mocks: { $store, $route: emptyRoute },
       },
     });
 
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(emptyRoute.query);
+    expect(CalculatorServices.searchRates).toHaveBeenCalledTimes(1);
+    expect(CalculatorServices.searchRates).toHaveBeenCalledWith(
+      emptyRoute.query
+    );
 
     await flushPromises();
 
@@ -91,13 +93,14 @@ describe("CalcRatesResult", () => {
   test("Se debe mostrar una table cuando se encuentran resultados de búsqueda", async () => {
     const wrapper = shallowMount(CalcRatesResult, {
       global: {
-        plugins: [store],
-        mocks: { $route: routeWithResults },
+        mocks: { $store, $route: routeWithResults },
       },
     });
 
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(routeWithResults.query);
+    expect(CalculatorServices.searchRates).toHaveBeenCalledTimes(1);
+    expect(CalculatorServices.searchRates).toHaveBeenCalledWith(
+      routeWithResults.query
+    );
 
     await flushPromises();
 

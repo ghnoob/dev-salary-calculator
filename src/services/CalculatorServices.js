@@ -29,11 +29,7 @@ export default {
     return apiClient.delete(`/rates/id/${id}`);
   },
 
-  searchRates(queryObject) {
-    const searchParams = new URLSearchParams();
-    for (let item of Object.entries(queryObject))
-      searchParams.append(item[0], item[1]);
-
-    return apiClient.get(`rates/search?${searchParams.toString()}`);
+  searchRates(params) {
+    return apiClient.get("/rates/search", { params });
   },
 };
