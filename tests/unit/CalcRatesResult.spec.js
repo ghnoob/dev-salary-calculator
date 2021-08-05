@@ -51,12 +51,7 @@ describe("CalcRatesResult", () => {
   beforeAll(() => {
     CalculatorServices.searchRates = jest.fn((query) => {
       const data = mockDatabase.filter((rate) => {
-        for (let key of Object.keys(query)) {
-          if (query[key] !== rate[key]) {
-            return false;
-          }
-        }
-        return true;
+        return Object.keys(query).every((key) => query[key] === rate[key]);
       });
 
       return { data };

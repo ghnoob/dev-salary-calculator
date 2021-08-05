@@ -108,18 +108,26 @@ export default {
       return this.query.currency.toUpperCase();
     },
     averageSalary() {
-      let sum = 0;
-      for (let rate of this.queryResult)
-        if (!isNaN(rate.average_salary_in_cents))
-          sum += rate.average_salary_in_cents;
+      const reducer = (a, b) => {
+        const salary = Number(b.average_salary_in_cents);
+        if (!Number.isNaN(salary)) {
+          return a + salary;
+        }
+        return a;
+      };
+      const sum = this.queryResult.reduce(reducer, 0);
 
       return sum / 100 / this.queryResult.length;
     },
     averageGrossMargin() {
-      let sum = 0;
-      for (let rate of this.queryResult)
-        if (!isNaN(rate.gross_margin_in_cents))
-          sum += rate.gross_margin_in_cents;
+      const reducer = (a, b) => {
+        const grossMargin = Number(b.gross_margin_in_cents);
+        if (!Number.isNaN(grossMargin)) {
+          return a + grossMargin;
+        }
+        return a;
+      };
+      const sum = this.queryResult.reduce(reducer, 0);
 
       return sum / 100 / this.queryResult.length;
     },
@@ -128,17 +136,6 @@ export default {
     },
     queryHasResults() {
       return this.queryResult.length > 0;
-    },
-  },
-
-  watch: {
-    queryResult() {
-      for (let i in this.queryResult) {
-        const salary = parseInt(this.queryResult[i].average_salary_in_cents);
-        this.queryResult[i].average_salary_in_cents = salary;
-        const grossMargin = parseInt(this.queryResult[i].gross_margin_in_cents);
-        this.queryResult[i].gross_margin_in_cents = grossMargin;
-      }
     },
   },
 };
