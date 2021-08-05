@@ -7,6 +7,13 @@ describe("App.vue", () => {
     commit: jest.fn(),
   };
 
+  const $toast = {
+    show: jest.fn(),
+    error: jest.fn(),
+    success: jest.fn(),
+    clear: jest.fn(),
+  };
+
   const mockTechonologies = {
     data: [
       {
@@ -53,18 +60,19 @@ describe("App.vue", () => {
 
   beforeAll(() => {
     CalculatorServices.getTechnologies = jest.fn(() => mockTechonologies);
-    CalculatorServices.getRates = jest.fn(() => mockRates);
   });
 
   test("Se cargan las tecnologías y las tarifas del store", async () => {
+    CalculatorServices.getRates = jest.fn(() => mockRates);
+
     shallowMount(App, {
       global: {
-        mocks: {
-          $store,
-        },
+        mocks: { $store, $toast },
         stubs: ["router-link", "router-view"],
       },
     });
+
+    expect($toast.show).toHaveBeenCalled();
 
     expect(CalculatorServices.getTechnologies).toHaveBeenCalled();
     await flushPromises();
@@ -78,5 +86,31 @@ describe("App.vue", () => {
       mockTechonologies.data
     );
     expect($store.commit).toHaveBeenCalledWith("setRates", mockRates.data);
+    expect($toast.clear).toHaveBeenCalled();
+    expect($toast.success).toHaveBeenCalled();
+  });
+
+  test("Si hay un error se muestra un mensaje", async () => {
+    CalculatorServices.getRates = jest.fn(() => {
+      throw new Error();
+    });
+
+    shallowMount(App, {
+      global: {
+        mocks: { $store, $toast },
+        stubs: ["router-link", "router-view"],
+      },
+    });
+
+    expect($toast.show).toHaveBeenCalled();
+
+    expect(CalculatorServices.getTechnologies).toHaveBeenCalled();
+    await flushPromises();
+    expect(CalculatorServices.getRates).toHaveBeenCalled();
+
+    await flushPromises();
+
+    expect($toast.clear).toHaveBeenCalled();
+    expect($toast.error).toHaveBeenCalled();
   });
 });

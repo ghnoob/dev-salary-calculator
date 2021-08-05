@@ -12,6 +12,13 @@ describe("NewRate", () => {
     push: jest.fn(),
   };
 
+  const $toast = {
+    show: jest.fn(),
+    error: jest.fn(),
+    success: jest.fn(),
+    clear: jest.fn(),
+  };
+
   const mockRate = {
     id: 3,
     technology_id: 2,
@@ -22,18 +29,18 @@ describe("NewRate", () => {
     currency: "ars",
   };
 
-  beforeAll(() => {
-    CalculatorServices.postRate = jest.fn();
-  });
-
   test("Cuando se reciben los datos del formulario se llama a la API", async () => {
+    CalculatorServices.postRate = jest.fn();
+
     const wrapper = shallowMount(NewRate, {
       global: {
-        mocks: { $store, $router },
+        mocks: { $store, $router, $toast },
       },
     });
 
     await wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
+
+    expect($toast.show).toHaveBeenCalled();
 
     expect(CalculatorServices.postRate).toHaveBeenCalled();
     expect(CalculatorServices.postRate).toHaveBeenCalledWith(mockRate);
@@ -43,7 +50,34 @@ describe("NewRate", () => {
     expect($store.commit).toHaveBeenCalled();
     expect($store.commit).toHaveBeenCalledWith("pushRate", mockRate);
 
+    expect($toast.clear).toHaveBeenCalled();
+    expect($toast.success).toHaveBeenCalled();
+
     expect($router.push).toHaveBeenCalled();
     expect($router.push).toHaveBeenCalledWith({ name: "RateList" });
+  });
+
+  test("Si hay un error se muestra un mensaje", async () => {
+    CalculatorServices.postRate = jest.fn(() => {
+      throw new Error();
+    });
+
+    const wrapper = shallowMount(NewRate, {
+      global: {
+        mocks: { $store, $router, $toast },
+      },
+    });
+
+    await wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
+
+    expect($toast.show).toHaveBeenCalled();
+
+    expect(CalculatorServices.postRate).toHaveBeenCalled();
+    expect(CalculatorServices.postRate).toHaveBeenCalledWith(mockRate);
+
+    await flushPromises();
+
+    expect($toast.clear).toHaveBeenCalled();
+    expect($toast.error).toHaveBeenCalled();
   });
 });

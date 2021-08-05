@@ -28,10 +28,18 @@ export default {
   },
   methods: {
     async onMount() {
-      const technologies = await CalculatorServices.getTechnologies();
-      const rates = await CalculatorServices.getRates();
-      this.$store.commit("setTechnologies", technologies.data);
-      this.$store.commit("setRates", rates.data);
+      try {
+        this.$toast.show("Cargando...", { duration: false });
+        const technologies = await CalculatorServices.getTechnologies();
+        const rates = await CalculatorServices.getRates();
+        this.$store.commit("setTechnologies", technologies.data);
+        this.$store.commit("setRates", rates.data);
+        this.$toast.clear();
+        this.$toast.success("Datos cargados correctamente");
+      } catch (error) {
+        this.$toast.clear();
+        this.$toast.error(error.toString());
+      }
     },
   },
 };

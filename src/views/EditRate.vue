@@ -14,9 +14,17 @@ export default {
 
   methods: {
     async editRate(rate) {
-      await CalculatorServices.putRate(rate);
-      await this.$store.commit("editRate", rate);
-      this.$router.push({ name: "RateList" });
+      try {
+        this.$toast.show("Editando...", { duration: false });
+        await CalculatorServices.putRate(rate);
+        await this.$store.commit("editRate", rate);
+        this.$toast.clear();
+        this.$toast.success("Editada correctamente");
+        this.$router.push({ name: "RateList" });
+      } catch (error) {
+        this.$toast.clear();
+        this.$toast.error(error.toString());
+      }
     },
   },
 

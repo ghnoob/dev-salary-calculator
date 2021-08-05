@@ -62,8 +62,16 @@ export default {
 
   methods: {
     async searchRates() {
-      const response = await CalculatorServices.searchRates(this.query);
-      this.queryResult = response.data;
+      try {
+        this.$toast.show("Buscando...", { duration: false });
+        const response = await CalculatorServices.searchRates(this.query);
+        this.queryResult = response.data;
+        this.$toast.clear();
+        this.$toast.success("Búsqueda completada");
+      } catch (error) {
+        this.$toast.clear();
+        this.$toast.error(error.toString());
+      }
     },
   },
 

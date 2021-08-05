@@ -100,8 +100,16 @@ export default {
 
     async deleteRate() {
       if (confirm("¿Desea borrar el registro seleccionado?")) {
-        await CalculatorServices.deleteRate(this.selectedRateId);
-        this.$store.commit("deleteRate", this.selectedRateId);
+        try {
+          this.$toast.show("Eliminando...", { duration: false });
+          await CalculatorServices.deleteRate(this.selectedRateId);
+          this.$store.commit("deleteRate", this.selectedRateId);
+          this.$toast.clear();
+          this.$toast.success("Eliminada correctamente");
+        } catch (error) {
+          this.$toast.clear();
+          this.$toast.error(error.toString());
+        }
       }
     },
   },

@@ -14,9 +14,17 @@ export default {
 
   methods: {
     async addRate(rate) {
-      await CalculatorServices.postRate(rate);
-      this.$store.commit("pushRate", rate);
-      this.$router.push({ name: "RateList" });
+      try {
+        this.$toast.show("Agregando tarifa...", { duration: false });
+        await CalculatorServices.postRate(rate);
+        this.$store.commit("pushRate", rate);
+        this.$toast.clear();
+        this.$toast.success("Agregada correctamente");
+        this.$router.push({ name: "RateList" });
+      } catch (error) {
+        this.$toast.clear();
+        this.$toast.error(error.toString());
+      }
     },
   },
 };

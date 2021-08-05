@@ -16,6 +16,13 @@ describe("RateList", () => {
     commit: jest.fn(),
   };
 
+  const $toast = {
+    show: jest.fn(),
+    error: jest.fn(),
+    success: jest.fn(),
+    clear: jest.fn(),
+  };
+
   describe("Sin rates", () => {
     test("La lista no se renderiza", () => {
       const wrapper = shallowMount(RateList, {
@@ -53,7 +60,6 @@ describe("RateList", () => {
     beforeAll(() => {
       $store.state.rates = mockRates;
       global.confirm = jest.fn(() => true);
-      CalculatorServices.deleteRate = jest.fn();
     });
 
     test("Los datos se deben listar correctamente", () => {
@@ -84,9 +90,11 @@ describe("RateList", () => {
     });
 
     test("Eliminar un registro llama a la API", async () => {
+      CalculatorServices.deleteRate = jest.fn();
+
       const wrapper = shallowMount(RateList, {
         global: {
-          mocks: { $store },
+          mocks: { $store, $toast },
           stubs: ["router-link"],
         },
       });
@@ -95,6 +103,9 @@ describe("RateList", () => {
       await wrapper.find("#delete").trigger("click");
 
       expect(global.confirm).toHaveBeenCalled();
+
+      expect($toast.show).toHaveBeenCalled();
+
       expect(CalculatorServices.deleteRate).toHaveBeenCalled();
       expect(CalculatorServices.deleteRate).toHaveBeenCalledWith("1");
 
@@ -102,6 +113,37 @@ describe("RateList", () => {
 
       expect($store.commit).toHaveBeenCalled();
       expect($store.commit).toHaveBeenCalledWith("deleteRate", "1");
+
+      expect($toast.clear).toHaveBeenCalled();
+      expect($toast.success).toHaveBeenCalled();
+    });
+
+    test("Si hay un error al eliminar se muestra un mensaje", async () => {
+      CalculatorServices.deleteRate = jest.fn(() => {
+        throw new Error();
+      });
+
+      const wrapper = shallowMount(RateList, {
+        global: {
+          mocks: { $store, $toast },
+          stubs: ["router-link"],
+        },
+      });
+
+      await wrapper.find("tbody tr").trigger("click");
+      await wrapper.find("#delete").trigger("click");
+
+      expect(global.confirm).toHaveBeenCalled();
+
+      expect($toast.show).toHaveBeenCalled();
+
+      expect(CalculatorServices.deleteRate).toHaveBeenCalled();
+      expect(CalculatorServices.deleteRate).toHaveBeenCalledWith("1");
+
+      await flushPromises();
+
+      expect($toast.clear).toHaveBeenCalled();
+      expect($toast.error).toHaveBeenCalled();
     });
   });
 });
