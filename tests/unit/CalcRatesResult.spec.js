@@ -1,47 +1,10 @@
 import { shallowMount, flushPromises } from "@vue/test-utils";
 import CalcRatesResult from "@/views/CalcRatesResult.vue";
 import CalculatorServices from "@/services/CalculatorServices.js";
+import $toast from "./mocks/toast";
+import { $store } from "./mocks/store";
 
 describe("CalcRatesResult", () => {
-  const $store = {
-    state: {
-      technologies: [
-        { id: "1", name: "PHP" },
-        { id: "2", name: "JavaScript" },
-        { id: "3", name: "C#" },
-        { id: "4", name: "React.js" },
-      ],
-    },
-  };
-
-  const $toast = {
-    show: jest.fn(),
-    error: jest.fn(),
-    success: jest.fn(),
-    clear: jest.fn(),
-  };
-
-  const mockDatabase = [
-    {
-      id: "1",
-      technology_id: "2",
-      seniority: "semi_senior",
-      language: "spanish",
-      average_salary_in_cents: "6500000",
-      gross_margin_in_cents: "99900",
-      currency: "ars",
-    },
-    {
-      id: "2",
-      technology_id: "2",
-      seniority: "senior",
-      language: "english",
-      average_salary_in_cents: "2000",
-      gross_margin_in_cents: "100",
-      currency: "ars",
-    },
-  ];
-
   const routeWithResults = {
     query: { technology_id: "2", currency: "ars" },
   };
@@ -58,7 +21,7 @@ describe("CalcRatesResult", () => {
   describe("Sin errores", () => {
     beforeAll(() => {
       CalculatorServices.searchRates = jest.fn((query) => {
-        const data = mockDatabase.filter((rate) => {
+        const data = $store.state.rates.filter((rate) => {
           return Object.keys(query).every((key) => query[key] === rate[key]);
         });
 
@@ -89,7 +52,7 @@ describe("CalcRatesResult", () => {
 
       const params = wrapper.findAll("#params td");
 
-      expect(params[0].text()).toBe("C#");
+      expect(params[0].text()).toBe("Java");
       expect(params[1].text()).toBe("Senior");
       expect(params[2].text()).toBe("Inglés");
       expect(params[3].text()).toBe("USD");
@@ -119,7 +82,7 @@ describe("CalcRatesResult", () => {
 
       const params = wrapper.findAll("#params td");
 
-      expect(params[0].text()).toBe("JavaScript");
+      expect(params[0].text()).toBe("C#");
       expect(params[1].text()).toBe("Todas");
       expect(params[2].text()).toBe("Todos");
       expect(params[3].text()).toBe("ARS");

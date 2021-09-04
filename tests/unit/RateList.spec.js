@@ -1,33 +1,15 @@
 import { shallowMount, flushPromises } from "@vue/test-utils";
 import RateList from "@/views/RateList.vue";
 import CalculatorServices from "@/services/CalculatorServices.js";
+import { $store, emptyStore } from "./mocks/store";
+import $toast from "./mocks/toast";
 
 describe("RateList", () => {
-  const $store = {
-    state: {
-      technologies: [
-        { id: "1", name: "PHP" },
-        { id: "2", name: "JavaScript" },
-        { id: "3", name: "C#" },
-        { id: "4", name: "React.js" },
-      ],
-      rates: [],
-    },
-    commit: jest.fn(),
-  };
-
-  const $toast = {
-    show: jest.fn(),
-    error: jest.fn(),
-    success: jest.fn(),
-    clear: jest.fn(),
-  };
-
   describe("Sin rates", () => {
     test("La lista no se renderiza", () => {
       const wrapper = shallowMount(RateList, {
         global: {
-          mocks: { $store },
+          mocks: { $store: emptyStore },
           stubs: ["router-link"],
         },
       });
@@ -36,29 +18,7 @@ describe("RateList", () => {
   });
 
   describe("Con rates", () => {
-    const mockRates = [
-      {
-        id: "1",
-        technology_id: "2",
-        seniority: "junior",
-        language: "spanish",
-        average_salary_in_cents: "4000000",
-        gross_margin_in_cents: "20000",
-        currency: "ars",
-      },
-      {
-        id: "2",
-        technology_id: "3",
-        seniority: "semi_senior",
-        language: "english",
-        average_salary_in_cents: "87000000",
-        gross_margin_in_cents: "320000",
-        currency: "usd",
-      },
-    ];
-
     beforeAll(() => {
-      $store.state.rates = mockRates;
       global.confirm = jest.fn(() => true);
     });
 
@@ -74,19 +34,19 @@ describe("RateList", () => {
 
       const cells = wrapper.findAll("td");
 
-      expect(cells[0].text()).toBe("JavaScript");
-      expect(cells[1].text()).toBe("Junior");
-      expect(cells[2].text()).toBe("Español");
-      expect(cells[3].text()).toBe("$40000");
-      expect(cells[4].text()).toBe("$200");
+      expect(cells[0].text()).toBe("PHP");
+      expect(cells[1].text()).toBe("Senior");
+      expect(cells[2].text()).toBe("Inglés");
+      expect(cells[3].text()).toBe("$100000");
+      expect(cells[4].text()).toBe("$2000");
       expect(cells[5].text()).toBe("ars");
 
-      expect(cells[6].text()).toBe("C#");
-      expect(cells[7].text()).toBe("Semi senior");
+      expect(cells[6].text()).toBe("JavaScript");
+      expect(cells[7].text()).toBe("Senior");
       expect(cells[8].text()).toBe("Inglés");
-      expect(cells[9].text()).toBe("$870000");
-      expect(cells[10].text()).toBe("$3200");
-      expect(cells[11].text()).toBe("usd");
+      expect(cells[9].text()).toBe("$80000");
+      expect(cells[10].text()).toBe("$2000");
+      expect(cells[11].text()).toBe("ars");
     });
 
     test("Eliminar un registro llama a la API", async () => {

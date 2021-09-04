@@ -1,63 +1,12 @@
 import { shallowMount, flushPromises } from "@vue/test-utils";
 import CalculatorServices from "@/services/CalculatorServices";
 import App from "@/App.vue";
+import mockTechonologies from "./mocks/mockTechnologies";
+import mockRates from "./mocks/mockRates";
+import $toast from "./mocks/toast";
+import { $store } from "./mocks/store";
 
 describe("App.vue", () => {
-  const $store = {
-    commit: jest.fn(),
-  };
-
-  const $toast = {
-    show: jest.fn(),
-    error: jest.fn(),
-    success: jest.fn(),
-    clear: jest.fn(),
-  };
-
-  const mockTechonologies = {
-    data: [
-      {
-        id: 1,
-        name: "PHP",
-      },
-      {
-        id: 2,
-        name: "C#",
-      },
-      {
-        id: 3,
-        name: "Java",
-      },
-      {
-        id: 4,
-        name: "JavaScript",
-      },
-    ],
-  };
-
-  const mockRates = {
-    data: [
-      {
-        id: "1",
-        technology_id: "1",
-        seniority: "senior",
-        language: "english",
-        average_salary_in_cents: 10000000,
-        gross_margin_in_cents: 200000,
-        currency: "ars",
-      },
-      {
-        id: "2",
-        technology_id: "4",
-        seniority: "senior",
-        language: "english",
-        average_salary_in_cents: 8000000,
-        gross_margin_in_cents: 200000,
-        currency: "ars",
-      },
-    ],
-  };
-
   beforeAll(() => {
     CalculatorServices.getTechnologies = jest.fn(() => mockTechonologies);
   });

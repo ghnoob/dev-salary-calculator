@@ -1,33 +1,10 @@
 import { nextTick } from "vue";
 import { shallowMount } from "@vue/test-utils";
 import RateForm from "@/components/RateForm.vue";
+import { $store } from "./mocks/store";
+import $router from "./mocks/router";
 
 describe("RateForm", () => {
-  const $store = {
-    state: {
-      technologies: [
-        { id: "1", name: "JavaScript" },
-        { id: "2", name: "C#" },
-      ],
-      rates: [
-        {
-          id: "1",
-          technology_id: "2",
-          seniority: "senior",
-          language: "english",
-          average_salary_in_cents: "4500000",
-          gross_margin_in_cents: "32000",
-          currency: "usd",
-        },
-      ],
-    },
-  };
-
-  const $router = {
-    push: jest.fn(),
-    go: jest.fn(),
-  };
-
   afterEach(() => jest.clearAllMocks());
 
   test("El formulario debe mostrar ciertos campos cuando se crea o se edita", () => {
@@ -70,7 +47,7 @@ describe("RateForm", () => {
 
     expect(wrapper.emitted()).toHaveProperty("submitted");
     expect(wrapper.emitted("submitted")[0][0]).toStrictEqual({
-      id: "2",
+      id: "5",
       technology_id: "1",
       seniority: "junior",
       language: "spanish",
@@ -94,17 +71,17 @@ describe("RateForm", () => {
 
     await nextTick();
 
-    expect(wrapper.find("#technology").element.value).toBe("2");
+    expect(wrapper.find("#technology").element.value).toBe("1");
     expect(wrapper.find("#seniority").element.value).toBe("senior");
     expect(wrapper.find("#language").element.value).toBe("english");
-    expect(wrapper.find("#salary").element.value).toBe("4500000");
-    expect(wrapper.find("#gross-margin").element.value).toBe("32000");
-    expect(wrapper.find("#currency").element.value).toBe("usd");
+    expect(wrapper.find("#salary").element.value).toBe("10000000");
+    expect(wrapper.find("#gross-margin").element.value).toBe("200000");
+    expect(wrapper.find("#currency").element.value).toBe("ars");
   });
 
   test("Un id que no existe redirige a la página de error", () => {
     const $route = {
-      query: { id: "2" },
+      query: { id: "454" },
     };
 
     shallowMount(RateForm, {

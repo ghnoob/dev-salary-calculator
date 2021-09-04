@@ -1,18 +1,17 @@
 import { shallowMount } from "@vue/test-utils";
 import CalcRatesParams from "@/views/CalcRatesParams.vue";
 import RateForm from "@/components/RateForm.vue";
+import $router from "./mocks/router";
 
 describe("CalcRatesParams", () => {
-  test("Los datos recibidos del formulario se deben pasar a otra vista correctamente", async () => {
-    const $router = { push: jest.fn() };
-
+  test("Los datos recibidos del formulario se deben pasar a otra vista correctamente", () => {
     const wrapper = shallowMount(CalcRatesParams, {
       global: {
         mocks: { $router },
       },
     });
 
-    await wrapper.findComponent(RateForm).vm.$emit("submitted", {
+    wrapper.findComponent(RateForm).vm.$emit("submitted", {
       id: null,
       technology_id: "3",
       seniority: "semi_senior",

@@ -2,23 +2,11 @@ import { shallowMount, flushPromises } from "@vue/test-utils";
 import NewRate from "@/views/NewRate.vue";
 import RateForm from "@/components/RateForm.vue";
 import CalculatorServices from "@/services/CalculatorServices.js";
+import $toast from "./mocks/toast";
+import { $store } from "./mocks/store";
+import $router from "./mocks/router";
 
 describe("NewRate", () => {
-  const $store = {
-    commit: jest.fn(),
-  };
-
-  const $router = {
-    push: jest.fn(),
-  };
-
-  const $toast = {
-    show: jest.fn(),
-    error: jest.fn(),
-    success: jest.fn(),
-    clear: jest.fn(),
-  };
-
   const mockRate = {
     id: 3,
     technology_id: 2,
@@ -38,7 +26,7 @@ describe("NewRate", () => {
       },
     });
 
-    await wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
+    wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
 
     expect($toast.show).toHaveBeenCalled();
 
@@ -68,7 +56,7 @@ describe("NewRate", () => {
       },
     });
 
-    await wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
+    wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
 
     expect($toast.show).toHaveBeenCalled();
 
