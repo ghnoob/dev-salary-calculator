@@ -108,7 +108,7 @@ export default {
           this.$toast.success("Eliminada correctamente");
         } catch (error) {
           this.$toast.clear();
-          this.$toast.error(error.toString());
+          this.$toast.error(error.message);
         }
       }
     },

@@ -38,7 +38,7 @@ export default {
         this.$toast.success("Datos cargados correctamente");
       } catch (error) {
         this.$toast.clear();
-        this.$toast.error(error.toString());
+        this.$toast.error(error.message);
       }
     },
   },

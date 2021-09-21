@@ -23,7 +23,7 @@ export default {
         this.$router.push({ name: "RateList" });
       } catch (error) {
         this.$toast.clear();
-        this.$toast.error(error.toString());
+        this.$toast.error(error.message);
       }
     },
   },

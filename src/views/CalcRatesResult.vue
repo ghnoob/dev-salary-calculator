@@ -70,7 +70,7 @@ export default {
         this.$toast.success("Búsqueda completada");
       } catch (error) {
         this.$toast.clear();
-        this.$toast.error(error.toString());
+        this.$toast.error(error.message);
       }
     },
   },
