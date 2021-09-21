@@ -80,7 +80,6 @@ export default {
   data() {
     return {
       newRate: {
-        id: null,
         technology_id: null,
         seniority: "",
         language: "",
@@ -103,9 +102,6 @@ export default {
   },
   methods: {
     submit() {
-      if (!this.edit) {
-        this.newRate.id = this.highestId;
-      }
       this.$emit("submitted", this.newRate);
     },
 
@@ -123,9 +119,6 @@ export default {
     },
     rates() {
       return this.$store.state.rates.filter((rate) => rate.id !== null);
-    },
-    highestId() {
-      return (Math.max(...this.rates.map((rate) => rate.id)) + 1).toString();
     },
   },
 };
