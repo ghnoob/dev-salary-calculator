@@ -67,12 +67,12 @@ describe("RateList", () => {
       expect($toast.show).toHaveBeenCalled();
 
       expect(CalculatorServices.deleteRate).toHaveBeenCalled();
-      expect(CalculatorServices.deleteRate).toHaveBeenCalledWith("1");
+      expect(CalculatorServices.deleteRate).toHaveBeenCalledWith(1);
 
       await flushPromises();
 
       expect($store.commit).toHaveBeenCalled();
-      expect($store.commit).toHaveBeenCalledWith("deleteRate", "1");
+      expect($store.commit).toHaveBeenCalledWith("deleteRate", 1);
 
       expect($toast.clear).toHaveBeenCalled();
       expect($toast.success).toHaveBeenCalled();
@@ -98,7 +98,7 @@ describe("RateList", () => {
       expect($toast.show).toHaveBeenCalled();
 
       expect(CalculatorServices.deleteRate).toHaveBeenCalled();
-      expect(CalculatorServices.deleteRate).toHaveBeenCalledWith("1");
+      expect(CalculatorServices.deleteRate).toHaveBeenCalledWith(1);
 
       await flushPromises();
 

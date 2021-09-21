@@ -6,12 +6,12 @@ import { $store } from "./mocks/store";
 
 describe("CalcRatesResult", () => {
   const routeWithResults = {
-    query: { technology_id: "2", currency: "ars" },
+    query: { technology_id: 2, currency: "ars" },
   };
 
   const emptyRoute = {
     query: {
-      technology_id: "3",
+      technology_id: 3,
       seniority: "senior",
       language: "english",
       currency: "usd",

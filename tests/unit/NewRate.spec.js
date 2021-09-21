@@ -7,18 +7,20 @@ import { $store } from "./mocks/store";
 import $router from "./mocks/router";
 
 describe("NewRate", () => {
-  const mockRate = {
-    id: 3,
-    technology_id: 2,
-    seniority: "semi_senior",
-    language: "spanish",
-    average_salary_in_cents: "6500000",
-    gross_margin_in_cents: "99900",
-    currency: "ars",
+  const mockData = {
+    data: {
+      id: 3,
+      technology_id: 2,
+      seniority: "semi_senior",
+      language: "spanish",
+      average_salary_in_cents: "6500000",
+      gross_margin_in_cents: "99900",
+      currency: "ars",
+    },
   };
 
   test("Cuando se reciben los datos del formulario se llama a la API", async () => {
-    CalculatorServices.postRate = jest.fn();
+    CalculatorServices.postRate = jest.fn(() => mockData);
 
     const wrapper = shallowMount(NewRate, {
       global: {
@@ -26,17 +28,17 @@ describe("NewRate", () => {
       },
     });
 
-    wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
+    wrapper.findComponent(RateForm).vm.$emit("submitted", mockData.data);
 
     expect($toast.show).toHaveBeenCalled();
 
     expect(CalculatorServices.postRate).toHaveBeenCalled();
-    expect(CalculatorServices.postRate).toHaveBeenCalledWith(mockRate);
+    expect(CalculatorServices.postRate).toHaveBeenCalledWith(mockData.data);
 
     await flushPromises();
 
     expect($store.commit).toHaveBeenCalled();
-    expect($store.commit).toHaveBeenCalledWith("pushRate", mockRate);
+    expect($store.commit).toHaveBeenCalledWith("pushRate", mockData.data);
 
     expect($toast.clear).toHaveBeenCalled();
     expect($toast.success).toHaveBeenCalled();
@@ -56,12 +58,12 @@ describe("NewRate", () => {
       },
     });
 
-    wrapper.findComponent(RateForm).vm.$emit("submitted", mockRate);
+    wrapper.findComponent(RateForm).vm.$emit("submitted", mockData.data);
 
     expect($toast.show).toHaveBeenCalled();
 
     expect(CalculatorServices.postRate).toHaveBeenCalled();
-    expect(CalculatorServices.postRate).toHaveBeenCalledWith(mockRate);
+    expect(CalculatorServices.postRate).toHaveBeenCalledWith(mockData.data);
 
     await flushPromises();
 
