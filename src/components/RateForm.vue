@@ -3,7 +3,7 @@
     <ul class="wrapper">
       <li class="form-row">
         <label for="technology">Tecnología</label>
-        <select id="technology" v-model="newRate.technology_id" required>
+        <select id="technology" v-model.number="newRate.technology_id" required>
           <option v-if="search" value="all" class="search-all">Todas</option>
           <option v-for="tech in technologies" :key="tech.id" :value="tech.id">
             {{ tech.name }}
@@ -80,7 +80,6 @@ export default {
   data() {
     return {
       newRate: {
-        id: null,
         technology_id: null,
         seniority: "",
         language: "",
@@ -93,7 +92,7 @@ export default {
 
   mounted() {
     if (this.edit) {
-      const rate = this.rates.find((item) => item.id === this.id);
+      const rate = this.rates.find((item) => item.id == this.id);
       if (rate !== undefined) {
         this.newRate = rate;
       } else {
@@ -103,9 +102,6 @@ export default {
   },
   methods: {
     submit() {
-      if (!this.edit) {
-        this.newRate.id = this.highestId;
-      }
       this.$emit("submitted", this.newRate);
     },
 
@@ -116,16 +112,13 @@ export default {
 
   computed: {
     id() {
-      return this.$route.query.id;
+      return this.$route.params.id;
     },
     technologies() {
       return this.$store.state.technologies.filter((tech) => tech.id !== null);
     },
     rates() {
       return this.$store.state.rates.filter((rate) => rate.id !== null);
-    },
-    highestId() {
-      return (Math.max(...this.rates.map((rate) => rate.id)) + 1).toString();
     },
   },
 };

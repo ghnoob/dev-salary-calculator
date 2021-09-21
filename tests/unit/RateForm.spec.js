@@ -47,8 +47,7 @@ describe("RateForm", () => {
 
     expect(wrapper.emitted()).toHaveProperty("submitted");
     expect(wrapper.emitted("submitted")[0][0]).toStrictEqual({
-      id: "5",
-      technology_id: "1",
+      technology_id: 1,
       seniority: "junior",
       language: "spanish",
       average_salary_in_cents: "2000000",
@@ -59,7 +58,7 @@ describe("RateForm", () => {
 
   test("Editar un id carga los datos en el formulario", async () => {
     const $route = {
-      query: { id: "1" },
+      params: { id: "1" },
     };
 
     const wrapper = shallowMount(RateForm, {
@@ -81,7 +80,7 @@ describe("RateForm", () => {
 
   test("Un id que no existe redirige a la página de error", () => {
     const $route = {
-      query: { id: "454" },
+      params: { id: "454" },
     };
 
     shallowMount(RateForm, {

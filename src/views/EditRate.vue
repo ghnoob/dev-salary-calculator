@@ -1,6 +1,6 @@
 <template>
   <h3>Editar Tarifa</h3>
-  <rate-form :id="id" :edit="true" @submitted="editRate" />
+  <rate-form :edit="true" @submitted="editRate" />
 </template>
 
 <script>
@@ -16,8 +16,8 @@ export default {
     async editRate(rate) {
       try {
         this.$toast.show("Editando...", { duration: false });
-        await CalculatorServices.putRate(rate);
-        await this.$store.commit("editRate", rate);
+        const newRate = await CalculatorServices.putRate(rate);
+        await this.$store.commit("editRate", newRate.data);
         this.$toast.clear();
         this.$toast.success("Editada correctamente");
         this.$router.push({ name: "RateList" });
@@ -25,12 +25,6 @@ export default {
         this.$toast.clear();
         this.$toast.error(error.toString());
       }
-    },
-  },
-
-  computed: {
-    id() {
-      return this.$route.query.id;
     },
   },
 };

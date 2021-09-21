@@ -36,7 +36,7 @@ const routes = [
         component: NewRate,
       },
       {
-        path: "edit",
+        path: "edit/:id",
         name: "EditRate",
         component: EditRate,
       },

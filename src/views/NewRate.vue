@@ -16,8 +16,8 @@ export default {
     async addRate(rate) {
       try {
         this.$toast.show("Agregando tarifa...", { duration: false });
-        await CalculatorServices.postRate(rate);
-        this.$store.commit("pushRate", rate);
+        const newRate = await CalculatorServices.postRate(rate);
+        this.$store.commit("pushRate", newRate.data);
         this.$toast.clear();
         this.$toast.success("Agregada correctamente");
         this.$router.push({ name: "RateList" });

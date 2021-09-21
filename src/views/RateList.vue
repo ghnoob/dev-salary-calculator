@@ -33,7 +33,7 @@
       <router-link :to="{ name: 'NewRate' }">
         <button id="new" type="button">Nuevo</button>
       </router-link>
-      <router-link :to="{ name: 'EditRate', query: { id: selectedRateId } }">
+      <router-link :to="{ name: 'EditRate', params: { id: selectedRateId } }">
         <button type="button" :disabled="selectedRateId === null">
           Editar
         </button>
