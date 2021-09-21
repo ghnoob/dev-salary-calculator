@@ -3,7 +3,7 @@
     <ul class="wrapper">
       <li class="form-row">
         <label for="technology">Tecnología</label>
-        <select id="technology" v-model="newRate.technology_id" required>
+        <select id="technology" v-model.number="newRate.technology_id" required>
           <option v-if="search" value="all" class="search-all">Todas</option>
           <option v-for="tech in technologies" :key="tech.id" :value="tech.id">
             {{ tech.name }}
