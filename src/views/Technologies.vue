@@ -1,14 +1,14 @@
 <template>
   <h2>Tecnologías</h2>
-  <div class="technologies">
-    <span
-      class="tech-card"
+  <ul class="list-group">
+    <li
+      class="list-group-item"
       v-for="technology in technologies"
       :key="technology.id"
     >
       {{ technology.name }}
-    </span>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -20,18 +20,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.technologies {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.tech-card {
-  padding: 20px;
-  width: 250px;
-  border: 1px solid #39495c;
-  margin-bottom: 18px;
-}
-</style>
