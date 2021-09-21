@@ -93,7 +93,7 @@ export default {
 
   mounted() {
     if (this.edit) {
-      const rate = this.rates.find((item) => item.id === this.id);
+      const rate = this.rates.find((item) => item.id == this.id);
       if (rate !== undefined) {
         this.newRate = rate;
       } else {
@@ -116,7 +116,7 @@ export default {
 
   computed: {
     id() {
-      return this.$route.query.id;
+      return this.$route.params.id;
     },
     technologies() {
       return this.$store.state.technologies.filter((tech) => tech.id !== null);
