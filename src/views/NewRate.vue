@@ -1,5 +1,5 @@
 <template>
-  <h3>Ingresar datos de la nueva tarifa</h3>
+  <h3 class="text-center">Ingresar datos de la nueva tarifa</h3>
   <rate-form @submitted="addRate" />
 </template>
 

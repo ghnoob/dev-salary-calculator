@@ -1,5 +1,5 @@
 <template>
-  <h3>Editar Tarifa</h3>
+  <h3 class="text-center">Editar Tarifa</h3>
   <rate-form :edit="true" @submitted="editRate" />
 </template>
 
