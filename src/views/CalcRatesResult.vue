@@ -1,41 +1,45 @@
 <template>
   <div class="result">
-    <h4>Información</h4>
+    <h4 class="text-center">Información</h4>
     <div>
-      <table id="params">
-        <tr>
-          <th>Tecnología</th>
-          <td>{{ technologyName }}</td>
-        </tr>
-        <tr>
-          <th>Senority</th>
-          <td>{{ seniority }}</td>
-        </tr>
-        <tr>
-          <th>Idioma</th>
-          <td>{{ language }}</td>
-        </tr>
-        <tr>
-          <th>Moneda</th>
-          <td>{{ currency }}</td>
-        </tr>
-      </table>
-      <div v-if="queryHasResults" id="query-results">
-        <h4>Costos</h4>
-        <table>
+      <div class="table-responsive">
+        <table class="table mx-auto" id="params">
           <tr>
-            <th>Salario promedio</th>
-            <td>${{ averageSalary.toFixed(2) }}</td>
+            <th scope="row">Tecnología</th>
+            <td class="text-end">{{ technologyName }}</td>
           </tr>
           <tr>
-            <th>Márgen bruto promedio</th>
-            <td>${{ averageGrossMargin.toFixed(2) }}</td>
+            <th scope="row">Senority</th>
+            <td class="text-end">{{ seniority }}</td>
           </tr>
           <tr>
-            <th>Costo total promedio</th>
-            <td>${{ totalCost.toFixed(2) }}</td>
+            <th scope="row">Idioma</th>
+            <td class="text-end">{{ language }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Moneda</th>
+            <td class="text-end">{{ currency }}</td>
           </tr>
         </table>
+      </div>
+      <div v-if="queryHasResults" id="query-results">
+        <h4 class="text-center">Costos</h4>
+        <div class="table-responsive">
+          <table class="table mx-auto">
+            <tr>
+              <th scope="row">Salario promedio</th>
+              <td class="text-end">${{ averageSalary.toFixed(2) }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Márgen bruto promedio</th>
+              <td class="text-end">${{ averageGrossMargin.toFixed(2) }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Costo total promedio</th>
+              <td class="text-end">${{ totalCost.toFixed(2) }}</td>
+            </tr>
+          </table>
+        </div>
       </div>
       <p v-else id="no-query-results">
         <strong>
@@ -149,15 +153,8 @@ export default {
 };
 </script>
 
-<style>
-table {
-  margin: auto;
-  width: 40%;
-}
-th {
-  text-align: left;
-}
-td {
-  text-align: right;
+<style scoped>
+.table {
+  max-width: 480px;
 }
 </style>

@@ -10,7 +10,7 @@ describe("Technologies.vue", () => {
       },
     });
 
-    const list = wrapper.findAll("span");
+    const list = wrapper.findAll("li");
 
     expect(list[0].text()).toBe("PHP");
     expect(list[1].text()).toBe("C#");

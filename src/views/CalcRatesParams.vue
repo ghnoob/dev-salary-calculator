@@ -1,5 +1,5 @@
 <template>
-  <h4>Ingrese los criterios de búsqueda</h4>
+  <h4 class="text-center">Ingrese los criterios de búsqueda</h4>
   <rate-form :search="true" @submitted="createQuery" />
 </template>
 
